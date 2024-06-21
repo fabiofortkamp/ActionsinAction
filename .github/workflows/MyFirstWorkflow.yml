@@ -1,0 +1,23 @@
+name: My First Workflow #identifier for this workflow; notice no quotes
+# in YAML, mappins follow the `key: value` syntax
+on: # triggers for the workflow
+# notice this is a nested map, each level indented
+  push:
+    branches:
+      - main # in yaml, we create sequences by lines starting with dash and space
+  workflow_dispatch: # this allows manual trigger; notice the indentation signaling one level down from `on`
+    
+jobs: # this is another key of the global scope
+  MyFirstJob: # use names as keys in the `jobs` record 
+    runs-on: ubuntu-latest
+    steps:
+      # what follows is a sequence of maps
+      - run: echo "🖐️ Hello World!"
+
+      - name: Checkout
+        uses: actions/checkout@v4.1.7
+
+      - name: List files in repository
+        run: | # this indicated a linebreak that does not introduce a new scope
+          echo "The repository ${{ github.repository }} contains the following files:"
+          tree
